@@ -1,0 +1,33 @@
+# config.yaml
+# Single source of truth for the study. The code currently reads ranges from
+# src/sampling.py; mirror any edits here and in that file (or wire pyyaml to
+# load this -- a good first contribution to your own repo).
+
+simulation:
+  dt: 5.0e-4          # post-downsample step (50 us raw * DSrate=10)
+  t_end: 10.0         # horizon (s)
+  f0: 60.0            # nominal frequency (Hz)
+  rocof_window_s: 0.1 # RoCoF measurement window (grid-code style)
+
+paraemt:
+  dir: "/path/to/ParaEMT_public"
+  snapshot: "sim_snp_S6_50u_1pt.pkl"   # system 6 = your modified Kundur 2-area
+  raw_dt: 5.0e-5
+  ds_rate: 10
+
+# Continuous operating-condition ranges (Latin Hypercube samples these)
+parameters:
+  H_sys:      [2.0, 10.0]   # system inertia constant (s)
+  scr:        [1.0, 20.0]   # short-circuit ratio (grid strength)
+  load_level: [0.5,  1.5]   # load scaling (1.0 = base)
+  dP:         [0.0,  0.40]  # disturbance size (pu of base load)
+  t_event:    [1.0,  3.0]   # event time (s)
+  clearing_s: [0.05, 0.30]  # fault clearing time (s)
+
+disturbances: [baseline, strong_grid, heavy_load, islanding, fault]
+
+dataset:
+  n_per_disturbance: 150    # pilot: 40; full study: 150-300
+  jobs: 8                   # match physical cores
+
+targets: [f_nadir_hz, rocof_hz_s, settling_s]
