@@ -11,3 +11,7 @@ results/figures/*
 !results/figures/.gitkeep
 *.pkl
 .ipynb_checkpoints/
+ParaEMT_public-main/
+ParaEMT_public-main.zip
+logs_dataset_v1.txt
+copy/
